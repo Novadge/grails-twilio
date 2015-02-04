@@ -27,4 +27,8 @@
 /web-app/plugins
 
 # "temporary" build files
+<<<<<<< HEAD
 /target
+=======
+/target
+>>>>>>> b13c169102b41c2b512374ad02f632e2484b9bad

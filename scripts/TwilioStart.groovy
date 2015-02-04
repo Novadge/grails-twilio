@@ -35,6 +35,7 @@ private void updateConfig() {
                     apiID = 'enter your api Id'
                     apiPass = 'enter your api password'
                     smsUrl = '/2010-04-01/Accounts/'+ apiID + '/Messages.json'
+                    number = ""
                 }
             """
 			

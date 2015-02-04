@@ -21,6 +21,14 @@ import grails.transaction.Transactional
 class SmsService {
 def grailsApplication
 
+    /**
+     *  Send message with twilio rest api
+     *  @params
+     *  to: recipient number
+     *  from: sender number
+     *  body: message body
+     *  mediaUrl: url to media attachement ( for MMS ) 
+    **/
     def send(String to, String from,String body,String mediaUrl = "") {
         String twilioHost = grailsApplication.config.twilio.host
         String apiID = grailsApplication.config.twilio.apiID
@@ -31,6 +39,18 @@ def grailsApplication
  
     }
     
+    
+    /**
+     *  Send message with twilio rest api
+     *  @params
+     *  twilioHost: host address for twilio
+     *  apiID : Twilio API ID
+     *  apiPass : Twilio API password
+     *  to: recipient number
+     *  from: sender number
+     *  body: message body
+     *  mediaUrl: url to media attachement ( for MMS ) 
+    **/
     def send(String twilioHost, String apiID, String apiPass,String url,String to,String from,String body,String mediaUrl = "" ) {
          
         CredentialsProvider provider = new BasicCredentialsProvider();

@@ -24,10 +24,26 @@ def grailsApplication
     /**
      *  Send message with twilio rest api
      *  @params
+     *  Map props: A map of parameters
+     *  props.to: recipient number
+     *  props.from: sender number
+     *  props.body: message body
+     *  props.mediaUrl: url to media attachement ( for MMS ) 
+     *  @returns :CloseableHttpResponse
+    **/
+    def send(Map props) {
+        send(props.to,props.from,props.body,props.mediaUrl)
+    }
+        
+      
+    /**
+     *  Send message with twilio rest api
+     *  @params
      *  to: recipient number
      *  from: sender number
      *  body: message body
      *  mediaUrl: url to media attachement ( for MMS ) 
+     *  @returns :CloseableHttpResponse
     **/
     def send(String to, String from,String body,String mediaUrl = "") {
         String twilioHost = grailsApplication.config.twilio.host
@@ -50,6 +66,7 @@ def grailsApplication
      *  from: sender number
      *  body: message body
      *  mediaUrl: url to media attachement ( for MMS ) 
+     *  @returns :CloseableHttpResponse 
     **/
     def send(String twilioHost, String apiID, String apiPass,String url,String to,String from,String body,String mediaUrl = "" ) {
          
@@ -60,8 +77,8 @@ def grailsApplication
 
         HttpPost httpPost = new HttpPost(twilioHost+url);
         List <NameValuePair> params = new ArrayList <NameValuePair>();
-        params.add(new BasicNameValuePair("To", to)); // Replace with a valid phone number for your account.
-        params.add(new BasicNameValuePair("From", from)); // Replace with a valid phone number for your account.
+        params.add(new BasicNameValuePair("To", to)); // Recipients phone number.
+        params.add(new BasicNameValuePair("From", from)); // Your phone number ( Twilio ).
         params.add(new BasicNameValuePair("Body", body));
         if(mediaUrl){
            params.add(new BasicNameValuePair("MediaUrl", mediaUrl)); 

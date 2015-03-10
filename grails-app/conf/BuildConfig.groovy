@@ -40,16 +40,16 @@ grails.project.dependency.resolution = {
         // runtime 'mysql:mysql-connector-java:5.1.27'
         
          compile(group:'org.apache.httpcomponents',name:'httpclient',version:'4.3.6'){
-             export = true
+             export = false
          }
          compile(group:'org.apache.httpcomponents',name:'fluent-hc',version:'4.3.6'){
-             export = true
+             export = false
          }
          compile(group:'org.apache.httpcomponents',name:'httpclient-cache',version:'4.3.6'){
-             export = true
+             export = false
          }
          compile(group:'org.apache.httpcomponents',name:'httpmime',version:'4.3.6'){
-             export = true
+             export = false
          }
          //compile 'cglib:cglib-nodep:2.2'
          //Temporary inclusion due to bug in 2.4.2

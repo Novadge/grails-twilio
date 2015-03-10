@@ -27,13 +27,13 @@ def grailsApplication
      *  @params
      *  Map props: A map of parameters
      *  props.to: recipient number
-     *  props.from: sender number
+     *  props.from: sender number ( from twilio )
      *  props.body: message body
      *  props.mediaUrl: url to media attachement ( for MMS ) 
      *  @returns :CloseableHttpResponse
     **/
     def send(Map props) {
-        send(props.to,props.from,props.body,props.mediaUrl)
+        send(props?.to,props?.from,props?.body,props?.mediaUrl)
     }
         
       
@@ -41,7 +41,7 @@ def grailsApplication
      *  Send message with twilio rest api
      *  @params
      *  to: recipient number
-     *  from: sender number
+     *  from: sender number ( from twilio )
      *  body: message body
      *  mediaUrl: url to media attachement ( for MMS ) 
      *  @returns :CloseableHttpResponse
@@ -64,7 +64,7 @@ def grailsApplication
      *  apiID : Twilio API ID
      *  apiPass : Twilio API password
      *  to: recipient number
-     *  from: sender number
+     *  from: sender number ( from twilio )
      *  body: message body
      *  mediaUrl: url to media attachement ( for MMS ) 
      *  @returns :CloseableHttpResponse 
@@ -81,7 +81,7 @@ def grailsApplication
         params.add(new BasicNameValuePair("To", to)); // Recipients phone number.
         params.add(new BasicNameValuePair("From", from)); // Your phone number ( Twilio ).
         params.add(new BasicNameValuePair("Body", body));
-        if(mediaUrl){
+        if(mediaUrl){// if media url is provided.. then include it :)
            params.add(new BasicNameValuePair("MediaUrl", mediaUrl)); 
         }        
         

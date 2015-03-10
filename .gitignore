@@ -21,6 +21,7 @@
 # plugin release files
 /*.zip
 /plugin.xml
+/*.sha1
 
 # older plugin install locations
 /plugins

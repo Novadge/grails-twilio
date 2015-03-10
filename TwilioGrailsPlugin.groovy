@@ -10,7 +10,7 @@ class TwilioGrailsPlugin {
 
     // TODO Fill in these fields
     def title = "Twilio Plugin" // Headline display name of the plugin
-    def author = "Omasirichukwu Udeinya"
+    def author = "Omasirichukwu Joseph Udeinya"
     def authorEmail = ""
     def description = '''\
         The Twilio plug-in provides sms sending capabilities to a \n\
@@ -29,13 +29,13 @@ class TwilioGrailsPlugin {
     def organization = [ name: "Novadge", url: "http://www.novadge.com/" ]
 
     // Any additional developers beyond the author specified above.
-    def developers = [ [ name: "Omasiri Udeinya", email: "omasiri@novadge.com" ]]
+    def developers = [ [ name: "Omasiri Joseph Udeinya", email: "omasiri@novadge.com" ]]
 
     // Location of the plugin's issue tracker.
 //    def issueManagement = [ system: "JIRA", url: "http://jira.grails.org/browse/GPMYPLUGIN" ]
 
     // Online location of the plugin's browseable source code.
-//    def scm = [ url: "http://svn.codehaus.org/grails-plugins/" ]
+    def scm = [ url: "https://github.com/Novadge/twilio-grails" ]
 
     def doWithWebDescriptor = { xml ->
         // TODO Implement additions to web.xml (optional), this event occurs before

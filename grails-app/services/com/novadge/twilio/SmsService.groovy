@@ -1,94 +1,83 @@
 package com.novadge.twilio
-//import org.apache.http.impl.client.CloseableHttpClient
-//import org.apache.http.impl.client.HttpClients
-import org.apache.http.client.methods.CloseableHttpResponse
-import org.apache.http.client.methods.HttpGet
-import org.apache.http.client.methods.HttpPost
-import org.apache.http.NameValuePair
-import org.apache.http.message.BasicNameValuePair
-import org.apache.http.client.methods.*
-import org.apache.http.client.entity.UrlEncodedFormEntity
-import org.apache.http.HttpHost;
-import org.apache.http.client.*
-import org.apache.http.impl.client.*
-import org.apache.http.*
-import org.apache.http.impl.client.BasicCredentialsProvider
-import org.apache.http.auth.UsernamePasswordCredentials
+
 import org.apache.http.auth.AuthScope
+import org.apache.http.auth.UsernamePasswordCredentials
+import org.apache.http.client.CredentialsProvider
+import org.apache.http.client.HttpClient
+import org.apache.http.client.entity.UrlEncodedFormEntity
+import org.apache.http.client.methods.CloseableHttpResponse
+import org.apache.http.client.methods.HttpPost
+import org.apache.http.impl.client.BasicCredentialsProvider
+import org.apache.http.impl.client.HttpClientBuilder
+import org.apache.http.message.BasicNameValuePair
 
-import grails.transaction.Transactional
-
-@Transactional
 class SmsService {
-def grailsApplication
+
+    static transactional = false
+
+    def grailsApplication
 
     /**
-     *  Send message with twilio rest api
-     *  @params
-     *  Map props: A map of parameters
-     *  props.to: recipient number
-     *  props.from: sender number ( from twilio )
-     *  props.body: message body
-     *  props.mediaUrl: url to media attachement ( for MMS ) 
-     *  @returns :CloseableHttpResponse
-    **/
-    def send(Map props) {
-        send(props?.to,props?.from,props?.body,props?.mediaUrl)
+     * Send message with Twilio REST API.
+     * @param props: A map of parameters:
+     * <ul>
+     * <li>to: recipient number</li>
+     * <li>from: sender number ( from Twilio )</li>
+     * <li>body: message body</li>
+     * <li>url to media attachement ( for MMS )</li>
+     * </ul>
+     * @returns the response
+     */
+    CloseableHttpResponse send(Map props) {
+        send(props?.to, props?.from, props?.body, props?.mediaUrl)
     }
-        
-      
-    /**
-     *  Send message with twilio rest api
-     *  @params
-     *  to: recipient number
-     *  from: sender number ( from twilio )
-     *  body: message body
-     *  mediaUrl: url to media attachement ( for MMS ) 
-     *  @returns :CloseableHttpResponse
-    **/
-    def send(String to, String from,String body,String mediaUrl = "") {
-        String twilioHost = grailsApplication.config.twilio.host
-        String apiID = grailsApplication.config.twilio.apiID
-        String apiPass = grailsApplication.config.twilio.apiPass
-        String url = grailsApplication.config.twilio.smsUrl
-        
-        send(twilioHost,apiID,apiPass,url,to,from,body,mediaUrl)
- 
-    }
-    
-    
-    /**
-     *  Send message with twilio rest api
-     *  @params
-     *  twilioHost: host address for twilio
-     *  apiID : Twilio API ID
-     *  apiPass : Twilio API password
-     *  to: recipient number
-     *  from: sender number ( from twilio )
-     *  body: message body
-     *  mediaUrl: url to media attachement ( for MMS ) 
-     *  @returns :CloseableHttpResponse 
-    **/
-    def send(String twilioHost, String apiID, String apiPass,String url,String to,String from,String body,String mediaUrl = "" ) {
-         
-        CredentialsProvider provider = new BasicCredentialsProvider();
-        UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(apiID, apiPass);
-        provider.setCredentials(AuthScope.ANY, credentials);
-        HttpClient client = HttpClientBuilder.create().setDefaultCredentialsProvider(provider).build();
 
-        HttpPost httpPost = new HttpPost(twilioHost+url);
-        List <NameValuePair> params = new ArrayList <NameValuePair>();
-        params.add(new BasicNameValuePair("To", to)); // Recipients phone number.
-        params.add(new BasicNameValuePair("From", from)); // Your phone number ( Twilio ).
-        params.add(new BasicNameValuePair("Body", body));
-        if(mediaUrl){// if media url is provided.. then include it :)
-           params.add(new BasicNameValuePair("MediaUrl", mediaUrl)); 
-        }        
-        
-        httpPost.setEntity(new UrlEncodedFormEntity(params));
-        CloseableHttpResponse response2 = client.execute(httpPost);
-        return response2
+    /**
+     * Send message with Twilio REST API.
+     * @param to: recipient number
+     * @param from: sender number ( from twilio )
+     * @param body: message body
+     * @param mediaUrl: url to media attachement ( for MMS )
+     * @returns the response
+     */
+    CloseableHttpResponse send(String to, String from, String body, String mediaUrl = "") {
+        def conf = grailsApplication.config.twilio
+        String twilioHost = conf.host
+        String apiID = conf.apiID
+        String apiPass = conf.apiPass
+        String url = conf.smsUrl
+
+        send(twilioHost, apiID, apiPass, url, to, from, body, mediaUrl)
     }
-    
-    
+
+    /**
+     * Send message with Twilio REST API.
+     * @param twilioHost: host address for twilio
+     * @param apiID : Twilio API ID
+     * @param apiPass : Twilio API password
+     * @param to: recipient number
+     * @param from: sender number ( from twilio )
+     * @param body: message body
+     * @param mediaUrl: url to media attachement ( for MMS )
+     * @returns :CloseableHttpResponse
+     */
+    CloseableHttpResponse send(String twilioHost, String apiID, String apiPass,String url,String to,String from,String body,String mediaUrl = "" ) {
+
+        CredentialsProvider provider = new BasicCredentialsProvider()
+        UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(apiID, apiPass)
+        provider.setCredentials(AuthScope.ANY, credentials)
+        HttpClient client = HttpClientBuilder.create().setDefaultCredentialsProvider(provider).build()
+
+        HttpPost httpPost = new HttpPost(twilioHost + url)
+        List<BasicNameValuePair> params = [
+            new BasicNameValuePair("To", to), // Recipients phone number.
+            new BasicNameValuePair("From", from), // Your phone number ( Twilio ).
+            new BasicNameValuePair("Body", body)]
+        if (mediaUrl) { // if media url is provided.. then include it :)
+            params << new BasicNameValuePair("MediaUrl", mediaUrl)
+        }
+
+        httpPost.entity = new UrlEncodedFormEntity(params)
+        return client.execute(httpPost)
+    }
 }

@@ -1,46 +1,34 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-import grails.util.GrailsNameUtils
-import grails.util.Metadata
+includeTargets << grailsScript('_GrailsBootstrap')
 
-includeTargets << new File("$twilioPluginDir/scripts/_T2Common.groovy")
-target(twilioStart: 'adds attributes to config') {
-	depends(checkVersion, configureProxy, packageApp, classpath)
+target(twilioStart: 'Adds attributes to config') {
+    depends(checkVersion, configureProxy, packageApp, classpath)
 
-	
-	
-	updateConfig()
+    def configFile = new File(basedir, 'grails-app/conf/Config.groovy')
+    if (!configFile.exists()) {
+        return
+    }
 
-	printMessage """
+    configFile.withWriterAppend {
+        it.writeLine '''
+
+// Added by the twilio plugiin:
+    twilio {
+        // Enter your host address
+        host = 'https://api.twilio.com'
+        apiID = 'enter your api Id'
+        apiPass = 'enter your api password'
+        smsUrl = '/2010-04-01/Accounts/' + apiID + '/Messages.json'
+        number = ""
+    }
+'''
+    }
+
+    event 'StatusUpdate', """
 *********************************************************
 * Your grails-app/conf/Config.groovy has been updated   *
-* with config attributes.                               *
-* You may modify as needed.                             *
-******************************************************* *
+* with config attributes. You may modify as needed.     *
+*********************************************************
 """
-}
-private void updateConfig() {
-
-    def configFile = new File(appDir, 'conf/Config.groovy')
-    if (configFile.exists()) {
-        configFile.withWriterAppend {
-            it.writeLine '\n// Added by the twilio plugiin:'
-            it.writeLine """
-                twilio{
-                    // Enter your host address
-                    host = 'https://api.twilio.com'
-                    apiID = 'enter your api Id'
-                    apiPass = 'enter your api password'
-                    smsUrl = '/2010-04-01/Accounts/'+ apiID + '/Messages.json'
-                    number = ""
-                }
-            """
-			
-        }
-    }
 }
 
 setDefaultTarget 'twilioStart'

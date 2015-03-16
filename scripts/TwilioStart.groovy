@@ -11,7 +11,7 @@ target(twilioStart: 'Adds attributes to config') {
     configFile.withWriterAppend {
         it.writeLine '''
 
-// Added by the twilio plugiin:
+// Added by the twilio plugin:
     twilio {
         // Enter your host address
         host = 'https://api.twilio.com'

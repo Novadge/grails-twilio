@@ -25,6 +25,14 @@ Assuming you have a twilio account, then add the required information to your gr
 
 </code>
 
+<h2>BuildConfig.groovy</h2>
+Copy and paste the following to your BuildConfig.groovy File
+<code>
+compile(group:'org.apache.httpcomponents',name:'httpclient',version:'4.3.6')
+         compile(group:'org.apache.httpcomponents',name:'fluent-hc',version:'4.3.6')
+         compile(group:'org.apache.httpcomponents',name:'httpclient-cache',version:'4.3.6')
+         compile(group:'org.apache.httpcomponents',name:'httpmime',version:'4.3.6')
+</code>
 
 <h2>Usage</h2>
 

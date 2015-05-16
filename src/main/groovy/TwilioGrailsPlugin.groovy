@@ -11,6 +11,6 @@ class TwilioGrailsPlugin extends Plugin{
     def license = "APACHE"
     def organization = [ name: "Novadge", url: "http://www.novadge.com/" ]
     def developers = [ [ name: "Omasiri Joseph Udeinya", email: "omasiri@novadge.com" ]]
-    def issueManagement = [url: 'https://github.com/Novadge/twilio-grails3/issues']
-    def scm = [url: "https://github.com/Novadge/twilio-grails3" ]
+    def issueManagement = [url: 'https://github.com/Novadge/twilio/issues']
+    def scm = [url: "https://github.com/Novadge/twilio" ]
 }

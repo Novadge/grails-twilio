@@ -37,11 +37,11 @@ ext {
 bintray {
   pkg {
     userOrg = 'novadge' // If you want to publish to an organization
-    name = "twilio-grails"
-    issueTrackerUrl = "https://github.com/Novadge/twilio-grails/issues"
-    vcsUrl = "https://github.com/Novadge/twilio-grails3"
+    name = "twilio"
+    issueTrackerUrl = "https://github.com/Novadge/twilio/issues"
+    vcsUrl = "https://github.com/Novadge/twilio"
     version {
-      attributes = ['grails-plugin': "com.novadge.plugins:twilio-grails"]
+      attributes = ['grails-plugin': "com.novadge.plugins:twilio"]
       name = project.version
     }
   }

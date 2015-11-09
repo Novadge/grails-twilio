@@ -17,7 +17,7 @@ plugins {
 }
 
 version "0.1.0"
-group "com.grails.plugins"
+group "com.novadge.plugins"
 
 apply plugin: 'maven-publish'
 apply plugin: 'eclipse'
@@ -37,11 +37,11 @@ ext {
 bintray {
   pkg {
     userOrg = 'novadge' // If you want to publish to an organization
-    name = "twilio"
-    issueTrackerUrl = "https://github.com/Novadge/twilio/issues"
-    vcsUrl = "https://github.com/Novadge/twilio"
+    name = "grails-twilio"
+    issueTrackerUrl = "https://github.com/Novadge/grails-twilio/issues"
+    vcsUrl = "https://github.com/Novadge/grails-twilio"
     version {
-        attributes = ['grails-plugin': "com.grails.plugins:twilio"]
+        attributes = ['grails-plugin': "com.novadge.plugins:grails-twilio"]
       name = project.version
     }
   }

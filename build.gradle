@@ -67,8 +67,8 @@ task wrapper(type: Wrapper) {
 }
 grailsPublish {
     // TODO: Provide values here
-    user = 'user'
-    key = 'key'
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
     githubSlug = 'foo/bar'
     license {
         name = 'Apache-2.0'
@@ -76,6 +76,6 @@ grailsPublish {
     title = "Twilio"
     desc = "Provides SMS sending capabilities to a Grails application"
     developers = [omasiri:"Omasirichukwu Udeinya"]
-    portalUser = ""
-    portalPassword = ""    
+    portalUser = System.getenv('GRAILS_PORTAL_USER')
+    portalPassword = System.getenv('GRAILS_PORTAL_PASSWORD')    
 }

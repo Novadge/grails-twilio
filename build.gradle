@@ -11,7 +11,7 @@ buildscript {
     }
 }
 
-version "0.1.0"
+version "0.1.1"
 group "org.grails.plugins"
 
 apply plugin:"eclipse"
@@ -60,6 +60,14 @@ dependencies {
     compile "org.apache.httpcomponents:fluent-hc:$httpclientVersion"
     compile "org.apache.httpcomponents:httpclient-cache:$httpclientVersion"
     compile "org.apache.httpcomponents:httpmime:$httpclientVersion"
+    
+    compile('org.codehaus.groovy.modules.http-builder:http-builder:0.7.1') {
+            //        exclude module: "commons-logging"
+            //        exclude module: "xml-apis"
+            //        exclude module: "groovy"
+        }
+        String twilioVersion = "7.0.0-rc-2"//6.3.0
+        compile("com.twilio.sdk:twilio-java-sdk:$twilioVersion")
 }
 
 task wrapper(type: Wrapper) {

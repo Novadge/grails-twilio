@@ -59,7 +59,7 @@ class TwilioService {
      * </ul>
      * @returns the response
      */
-    CloseableHttpResponse post(Map twilioProps, Map reqParams) {
+    CloseableHttpResponse post(Map twilioProps,Map reqParams) {
 
         CredentialsProvider provider = new BasicCredentialsProvider()
         UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(twilioProps.apiID, twilioProps.apiPass)
@@ -69,11 +69,12 @@ class TwilioService {
         HttpPost httpPost = new HttpPost(twilioProps.url)
         List<BasicNameValuePair> params = []
         // for each item in reqParams
-        reqParams.each({key, val ->
+        reqParams.each{key, val ->
                 // add to params list
+                
                 BasicNameValuePair item = new BasicNameValuePair("${key}",val);
                 params.add(item)
-            })
+            }
         
 
         httpPost.entity = new UrlEncodedFormEntity(params)

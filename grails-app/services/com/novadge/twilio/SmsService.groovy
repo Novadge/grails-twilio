@@ -84,8 +84,14 @@ class SmsService {
         twilioProps.apiID = apiID
         twilioProps.apiPass = apiPass
         twilioProps.url = twilioHost + url
-                
-        Map reqParams = ["To":to,"From":from,"Body":body,"MediaUrl":mediaUrl]
+        Map reqParams =[:]    
+        if(mediaUrl){
+            reqParams = ["To":to,"From":from,"Body":body,"MediaUrl":mediaUrl]
+        }
+        else{
+           reqParams = ["To":to,"From":from,"Body":body] 
+        }
+        
         CloseableHttpResponse  result = twilioService.post(twilioProps,reqParams)
         HttpEntity entity = result.getEntity() // get result
         String responseBody = EntityUtils.toString(entity); // extract response body

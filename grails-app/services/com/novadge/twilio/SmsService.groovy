@@ -101,23 +101,57 @@ class SmsService {
         
         return responseMap as Map
          
+    }
 
-//        CredentialsProvider provider = new BasicCredentialsProvider()
-//        UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(apiID, apiPass)
-//        provider.setCredentials(AuthScope.ANY, credentials)
-//        HttpClient client = HttpClientBuilder.create().setDefaultCredentialsProvider(provider).build()
-//
-//        HttpPost httpPost = new HttpPost(twilioHost + url)
-//        List<BasicNameValuePair> params = [
-//            new BasicNameValuePair("To", to), // Recipients phone number.
-//            new BasicNameValuePair("From", from), // Your phone number ( Twilio ).
-//            new BasicNameValuePair("Body", body)]
-//        if (mediaUrl) { // if media url is provided.. then include it :)
-//            params << new BasicNameValuePair("MediaUrl", mediaUrl)
-//        }
-//        
-//        httpPost.entity = new UrlEncodedFormEntity(params)
-//        return client.execute(httpPost)
+     /**
+     * Send message with Twilio REST API.
+     *
+     * <h3>A usage example:</h3>
+     *
+     * <p>When the mediaUrl is not included:
+     * <pre> {@code
+     *  Map result = SmsService.send("twilioHost", "apiID", "apiPass", "url", "to", "from", "body","statusCallback")
+     * } </pre>
+     *
+     * <p>When the mediaUrl is included:
+     * <pre> {@code
+     *  Map result = SmsService.send("twilioHost", "apiID", "apiPass", "url", "to", "from", "body","statusCallback","mediaUrl)
+     * } </pre>
+     *
+     * @param twilioHost: host address for twilio
+     * @param apiID : Twilio API ID
+     * @param apiPass : Twilio API password
+     * @param to: recipient number
+     * @param from: sender number ( from twilio )
+     * @param body: message body
+     * @param statusCallback: A callback URL that Twilio will POST to each time the message status changes
+     * @param mediaUrl: url to media attachement ( for MMS )
+     * @returns :Map
+     */
+    Map send(String twilioHost, String apiID, String apiPass,String url,String to,String from,String body, String statusCallback, String mediaUrl = "" ) {
+
+        Map twilioProps = [:]
+        twilioProps.apiID = apiID
+        twilioProps.apiPass = apiPass
+        twilioProps.url = twilioHost + url
+        twilioProps.callbackUrl = statusCallback
+
+        Map reqParams = [:]
+
+        if (mediaUrl) {
+            reqParams = ["To":to,"From":from,"Body":body,"MediaUrl":mediaUrl,"StatusCallback": statusCallback]
+        } else {
+            reqParams = ["To":to,"From":from,"Body":body,"StatusCallback": statusCallback]
+        }
+
+        CloseableHttpResponse result = twilioService.post(twilioProps,reqParams)
+        HttpEntity entity = result.getEntity() // get result
+        String responseBody = EntityUtils.toString(entity); // extract response body
+        def jsonSlurper = new JsonSlurper() // for parsing response
+        def responseMap = jsonSlurper.parseText(responseBody); // parse into json object
+        result.close()
+
+        return responseMap as Map
     }
     
 }

@@ -41,7 +41,7 @@ class SmsService {
      * @returns Map: the response
      */
     Map send(Map props) {
-        if(props.apiId && props.apiPass){
+        if(props.apiId && props.apiPass && props.twilioHost && props.url) {
            send(props.twilioHost, props.apiID, props.apiPass,props.url,props.to,props.from,props.body,props.mediaUrl) 
         }
         else{
